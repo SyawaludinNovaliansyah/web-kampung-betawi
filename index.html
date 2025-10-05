@@ -93,20 +93,20 @@
             transform: translateZ(0);
         }
         @keyframes crownBounce {
-            0%, 100% { 
-                transform: translateY(0) rotate(0deg) translateZ(0); 
+            0%, 100% {
+                transform: translateY(0) rotate(0deg) translateZ(0);
             }
-            20% { 
-                transform: translateY(-0.5px) rotate(0.1deg) translateZ(0); 
+            20% {
+                transform: translateY(-0.5px) rotate(0.1deg) translateZ(0);
             }
-            40% { 
-                transform: translateY(-2px) rotate(0.25deg) translateZ(0); 
+            40% {
+                transform: translateY(-2px) rotate(0.25deg) translateZ(0);
             }
-            60% { 
-                transform: translateY(-0.5px) rotate(0.1deg) translateZ(0); 
+            60% {
+                transform: translateY(-0.5px) rotate(0.1deg) translateZ(0);
             }
-            80% { 
-                transform: translateY(-0.25px) rotate(0.05deg) translateZ(0); 
+            80% {
+                transform: translateY(-0.25px) rotate(0.05deg) translateZ(0);
             }
         }
         .welcome-text {
@@ -130,44 +130,140 @@
                 transform: translateY(0) translateZ(0);
             }
         }
-        .nav-menu {
+        /* Hamburger Menu Styles */
+        .nav-container {
             position: absolute;
             top: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: rgba(0,0,0,0.5);
-            padding: 10px 20px;
-            border-radius: 25px;
-            transition: all 0.3s ease;
+            left: 20px;
+            z-index: 1000;
         }
-        .nav-menu:hover {
-            background: rgba(0,0,0,0.7);
-            transform: translateX(-50%) scale(1.05);
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            padding: 5px;
+        }
+        .hamburger span {
+            width: 25px;
+            height: 3px;
+            background-color: white;
+            margin: 3px 0;
+            transition: 0.3s;
+            border-radius: 2px;
+        }
+        .hamburger.active span:nth-child(1) {
+            transform: rotate(-45deg) translate(-5px, 6px);
+        }
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+        .hamburger.active span:nth-child(3) {
+            transform: rotate(45deg) translate(-5px, -6px);
+        }
+        .nav-menu {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background: rgba(0,0,0,0.8);
+            padding: 20px;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            flex-direction: column;
+            min-width: 150px;
+        }
+        .nav-menu.active {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
         }
         .nav-menu ul {
             list-style: none;
             padding: 0;
             margin: 0;
             display: flex;
+            flex-direction: column;
         }
         .nav-menu li {
-            margin: 0 15px;
+            margin: 10px 0;
         }
         .nav-menu a {
             color: white;
             text-decoration: none;
             font-weight: bold;
             transition: color 0.3s ease, transform 0.3s ease;
+            padding: 5px 10px;
+            border-radius: 5px;
         }
         .nav-menu a:hover {
             color: #FFD700;
-            transform: scale(1.1);
+            transform: scale(1.05);
         }
         .nav-menu a.active {
             color: #FFD700;
         }
         .nav-menu a:not(.active) {
             color: #ADD8E6;
+        }
+        /* Desktop Styles (original) */
+        @media (min-width: 769px) {
+            .hamburger {
+                display: none;
+            }
+            .nav-container {
+                left: 50%;
+                top: 20px;
+                transform: translateX(-50%);
+            }
+            .nav-menu {
+                position: absolute;
+                top: 0;
+                left: 0;
+                background: rgba(0,0,0,0.5);
+                padding: 10px 20px;
+                border-radius: 25px;
+                transition: all 0.3s ease;
+                opacity: 1;
+                visibility: visible;
+                transform: none;
+                flex-direction: row;
+                min-width: auto;
+            }
+            .nav-menu ul {
+                display: flex;
+                flex-direction: row;
+            }
+            .nav-menu li {
+                margin: 0 15px;
+            }
+            .nav-menu:hover {
+                background: rgba(0,0,0,0.7);
+                transform: translateX(-50%) scale(1.05);
+            }
+        }
+        /* Mobile Styles */
+        @media (max-width: 768px) {
+            .hamburger {
+                display: flex;
+            }
+            .nav-container {
+                left: 15px;
+            }
+            .nav-menu {
+                left: 0;
+                top: 60px; /* Adjust based on hamburger height */
+                background: rgba(0,0,0,0.9);
+                border-radius: 10px;
+                box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+            }
+            .nav-menu ul {
+                flex-direction: column;
+            }
+            .nav-menu li {
+                margin: 10px 0;
+            }
         }
         section {
             padding: 2em 1em;
@@ -242,7 +338,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background-image: 
+            background-image:
                 radial-gradient(2px 2px at 20px 30px, #fff, transparent),
                 radial-gradient(2px 2px at 40px 70px, rgba(255,255,255,0.8), transparent),
                 radial-gradient(1px 1px at 90px 40px, #fff, transparent),
@@ -331,12 +427,6 @@
             .welcome-text {
                 font-size: 1.2em;
             }
-            .nav-menu ul {
-                flex-direction: column;
-            }
-            .nav-menu li {
-                margin: 5px 0;
-            }
             section {
                 padding: 1em;
             }
@@ -367,26 +457,36 @@
             .logo-title {
                 font-size: 1.5em;
             }
-            .nav-menu {
-                top: 10px;
-                padding: 5px 10px;
-            }
             .crown-icon {
                 width: 50px;
                 height: 50px;
+            }
+            .nav-container {
+                left: 10px;
+            }
+            .hamburger span {
+                width: 20px;
+                height: 2px;
             }
         }
     </style>
 </head>
 <body>
     <header>
-        <nav class="nav-menu">
-            <ul>
-                <li><a href="index.html" class="active">Sejarah</a></li>
-                <li><a href="makanan.html">Makanan</a></li>
-                <li><a href="spot.html">Spot</a></li>
-            </ul>
-        </nav>
+        <div class="nav-container">
+            <div class="hamburger" onclick="toggleMenu()">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            <nav class="nav-menu">
+                <ul>
+                    <li><a href="index.html" class="active">Sejarah</a></li>
+                    <li><a href="makanan.html">Makanan</a></li>
+                    <li><a href="spot.html">Spot</a></li>
+                </ul>
+            </nav>
+        </div>
         <h1 class="logo-title">Setu Babakan</h1>
         <img src="./1000_F_544269629_qpJ5dyc7a9q5vMLcj59DGdYzMk7ciIQf-removebg-preview.png" alt="Ondel-Ondel" class="crown-icon">
         <p class="welcome-text">Selamat Datang Di Cagar Budaya Setu Babakan</p>
@@ -394,58 +494,74 @@
     <section id="sejarah" class="visible">
         <h2>Sejarah Setu Babakan (Kampung Betawi)</h2>
         <p>
-            Setu Babakan atau Situ Babakan adalah suatu cagar budaya yang terletak di Srengseng Sawah, Kecamatan Jagakarsa, Jakarta Selatan. 
-            Situ berarti 'danau' dalam bahasa Sunda, sedangkan babakan berarti 'kampung baru'. Penamaan ini disebabkan oleh fakta Situ Babakan 
-            diapit oleh tiga buah danau. Pada tahun 2004, daerah ini dijadikan Pusat Perkampungan Betawi bersamaan dengan HUT DKI yang ke-474 
-            dikarenakan masih banyaknya perkampungan Betawi asli di daerah ini. Daerah cagar budaya ini meliputi 175 hektare, terdiri dari 
+            Setu Babakan atau Situ Babakan adalah suatu cagar budaya yang terletak di Srengseng Sawah, Kecamatan Jagakarsa, Jakarta Selatan.
+            Situ berarti 'danau' dalam bahasa Sunda, sedangkan babakan berarti 'kampung baru'. Penamaan ini disebabkan oleh fakta Situ Babakan
+            diapit oleh tiga buah danau. Pada tahun 2004, daerah ini dijadikan Pusat Perkampungan Betawi bersamaan dengan HUT DKI yang ke-474
+            dikarenakan masih banyaknya perkampungan Betawi asli di daerah ini. Daerah cagar budaya ini meliputi 175 hektare, terdiri dari
             Kebun Rakyat, perkampungan masyarakat betawi serta kedua danau yang mengapit perkampungan ini.
         </p>
         <p>
-            Masyarakat di wilayah ini mengembangkan usaha pertanian dan perikanan sekaligus membantu dalam usaha penghijauan wilayah Situ 
-            Babakan. Selain itu di daerah ini dapat disaksikan pula keseharian masyarakat setempat seperti budidaya ikan dalam keramba yang 
-            terdapat di sepanjang pinggiran situ, pemancingan, bercocok tanam, perdagangan, pembuatan kerajinan tangan serta pembuatan makanan 
-            khas Betawi seperti dodol Betawi dan Bir pletok. Selain itu di daerah ini juga sering diselenggarakan acara kesenian daerah Betawi 
-            seperti Tari Cokek, Tari Topeng, Lenong dan Ondel-ondel pada panggung terbuka setiap hari Sabtu dan Minggu. Pada acara ini 
-            biasanya pengunjung pun dapat ikut berinteraksi dalam pelaksanaan acara-acara tersebut, seperti ikut menari atau mengomentari 
+            Masyarakat di wilayah ini mengembangkan usaha pertanian dan perikanan sekaligus membantu dalam usaha penghijauan wilayah Situ
+            Babakan. Selain itu di daerah ini dapat disaksikan pula keseharian masyarakat setempat seperti budidaya ikan dalam keramba yang
+            terdapat di sepanjang pinggiran situ, pemancingan, bercocok tanam, perdagangan, pembuatan kerajinan tangan serta pembuatan makanan
+            khas Betawi seperti dodol Betawi dan Bir pletok. Selain itu di daerah ini juga sering diselenggarakan acara kesenian daerah Betawi
+            seperti Tari Cokek, Tari Topeng, Lenong dan Ondel-ondel pada panggung terbuka setiap hari Sabtu dan Minggu. Pada acara ini
+            biasanya pengunjung pun dapat ikut berinteraksi dalam pelaksanaan acara-acara tersebut, seperti ikut menari atau mengomentari
             para pemain lenong yang sedang beraksi.
         </p>
         <div class="history-grid">
             <div class="grid-item">
                 <img src="https://www.nowjakarta.co.id/wp-content/uploads/2024/05/WhatsApp-Image-2024-05-13-at-11.54.32-min-1024x768.jpeg" alt="Ritual Palang Pintu">
                 <p>
-                    Palang Pintu adalah ritual unik dalam upacara pernikahan adat Betawi yang menguji ketangguhan mempelai pria. 
-                    Tradisi ini menggabungkan elemen pencak silat, adu pantun, dan pembacaan ayat suci, di mana pengantin pria harus 
-                    melewati "palang" atau rintangan dari keluarga mempelai wanita untuk membuka pintu restu. Simbolis, Palang Pintu 
-                    melambangkan perjuangan pria dalam membangun rumah tangga, sekaligus menguji kecerdasan dan ketabahan calon suami. 
-                    Ritual ini telah menjadi bagian tak terpisahkan dari pernikahan Betawi sejak masa kolonial, mencerminkan nilai gotong 
+                    Palang Pintu adalah ritual unik dalam upacara pernikahan adat Betawi yang menguji ketangguhan mempelai pria.
+                    Tradisi ini menggabungkan elemen pencak silat, adu pantun, dan pembacaan ayat suci, di mana pengantin pria harus
+                    melewati "palang" atau rintangan dari keluarga mempelai wanita untuk membuka pintu restu. Simbolis, Palang Pintu
+                    melambangkan perjuangan pria dalam membangun rumah tangga, sekaligus menguji kecerdasan dan ketabahan calon suami.
+                    Ritual ini telah menjadi bagian tak terpisahkan dari pernikahan Betawi sejak masa kolonial, mencerminkan nilai gotong
                     royong dan humor khas masyarakatnya.
                 </p>
             </div>
             <div class="grid-item">
                 <img src="https://1001indonesia.net/asset/2017/06/Gambang-Kromong.jpg" alt="Gambang Kromong">
                 <p>
-                    Gambang Kromong merupakan kesenian musik tradisional Betawi yang merupakan hasil akulturasi budaya Tiongkok dengan 
+                    Gambang Kromong merupakan kesenian musik tradisional Betawi yang merupakan hasil akulturasi budaya Tiongkok dengan
                     elemen lokal, berbentuk orkes yang menggunakan instrumen perkusi seperti gambang (xylophone kayu) dan kromong (gong besar)
-                    sebagai nama panggilannya. Lahir dari interaksi etnis pada era kolonial di Batavia, Gambang Kromong awalnya menjadi 
-                    ungkapan ekspresi masyarakat Betawi melalui media bunyi, dengan tambahan instrumen seperti suling, tehyan, dan biola 
-                    yang mencampur nuansa gamelan Jawa dengan pengaruh Tionghoa. Kini, alunan riangnya sering dimainkan dalam pesta rakyat, 
-                    pernikahan, atau acara budaya, mengajak penonton bergoyang dengan ritme yang meriah dan penuh harmoni. 
+                    sebagai nama panggilannya. Lahir dari interaksi etnis pada era kolonial di Batavia, Gambang Kromong awalnya menjadi
+                    ungkapan ekspresi masyarakat Betawi melalui media bunyi, dengan tambahan instrumen seperti suling, tehyan, dan biola
+                    yang mencampur nuansa gamelan Jawa dengan pengaruh Tionghoa. Kini, alunan riangnya sering dimainkan dalam pesta rakyat,
+                    pernikahan, atau acara budaya, mengajak penonton bergoyang dengan ritme yang meriah dan penuh harmoni.
                 </p>
             </div>
             <div class="grid-item">
                 <img src="https://www.senibudayabetawi.com/wp-content/uploads/2022/11/Tari-topeng-betawi-foto-travelinkmagz.com_.jpg" alt="Tari Topeng">
                 <p>
-                    Tari Topeng adalah seni tari klasik dari Jawa Barat yang berasal dari masa Kerajaan Pajajaran pada abad ke-16, 
-                    di mana penari mengenakan topeng kayu untuk memerankan tokoh-tokoh legendaris seperti Dewi Sri atau Prabu Siliwangi. 
-                    Gerakannya halus dan ekspresif, menggabungkan unsur pencak silat, gamelan, dan cerita rakyat Sunda, sering ditampilkan 
-                    dalam upacara adat atau festival budaya. Tari ini melambangkan harmoni antara manusia dan alam, dengan makna filosofis 
-                    tentang kehidupan dan kematian. Hingga kini, Tari Topeng dilestarikan di sanggar-sanggar seni untuk memperkaya identitas 
+                    Tari Topeng adalah seni tari klasik dari Jawa Barat yang berasal dari masa Kerajaan Pajajaran pada abad ke-16,
+                    di mana penari mengenakan topeng kayu untuk memerankan tokoh-tokoh legendaris seperti Dewi Sri atau Prabu Siliwangi.
+                    Gerakannya halus dan ekspresif, menggabungkan unsur pencak silat, gamelan, dan cerita rakyat Sunda, sering ditampilkan
+                    dalam upacara adat atau festival budaya. Tari ini melambangkan harmoni antara manusia dan alam, dengan makna filosofis
+                    tentang kehidupan dan kematian. Hingga kini, Tari Topeng dilestarikan di sanggar-sanggar seni untuk memperkaya identitas
                     budaya Indonesia.
                 </p>
             </div>
         </div>
     </section>
     <script>
+        // Hamburger Menu Toggle
+        function toggleMenu() {
+            const hamburger = document.querySelector('.hamburger');
+            const navMenu = document.querySelector('.nav-menu');
+            hamburger.classList.toggle('active');
+            navMenu.classList.toggle('active');
+        }
+
+        // Close menu when clicking on a link (optional, for better UX)
+        document.querySelectorAll('.nav-menu a').forEach(link => {
+            link.addEventListener('click', () => {
+                document.querySelector('.hamburger').classList.remove('active');
+                document.querySelector('.nav-menu').classList.remove('active');
+            });
+        });
+
         // Simple scroll animation trigger (not needed for single section, but kept for consistency)
         function checkScroll() {
             const sections = document.querySelectorAll('section');
