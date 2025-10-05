@@ -93,20 +93,20 @@
             transform: translateZ(0);
         }
         @keyframes crownBounce {
-            0%, 100% { 
-                transform: translateY(0) rotate(0deg) translateZ(0); 
+            0%, 100% {
+                transform: translateY(0) rotate(0deg) translateZ(0);
             }
-            20% { 
-                transform: translateY(-0.5px) rotate(0.1deg) translateZ(0); 
+            20% {
+                transform: translateY(-0.5px) rotate(0.1deg) translateZ(0);
             }
-            40% { 
-                transform: translateY(-2px) rotate(0.25deg) translateZ(0); 
+            40% {
+                transform: translateY(-2px) rotate(0.25deg) translateZ(0);
             }
-            60% { 
-                transform: translateY(-0.5px) rotate(0.1deg) translateZ(0); 
+            60% {
+                transform: translateY(-0.5px) rotate(0.1deg) translateZ(0);
             }
-            80% { 
-                transform: translateY(-0.25px) rotate(0.05deg) translateZ(0); 
+            80% {
+                transform: translateY(-0.25px) rotate(0.05deg) translateZ(0);
             }
         }
         .welcome-text {
@@ -130,44 +130,140 @@
                 transform: translateY(0) translateZ(0);
             }
         }
-        .nav-menu {
+        /* Hamburger Menu Styles */
+        .nav-container {
             position: absolute;
             top: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: rgba(0,0,0,0.5);
-            padding: 10px 20px;
-            border-radius: 25px;
-            transition: all 0.3s ease;
+            left: 20px;
+            z-index: 1000;
         }
-        .nav-menu:hover {
-            background: rgba(0,0,0,0.7);
-            transform: translateX(-50%) scale(1.05);
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            padding: 5px;
+        }
+        .hamburger span {
+            width: 25px;
+            height: 3px;
+            background-color: white;
+            margin: 3px 0;
+            transition: 0.3s;
+            border-radius: 2px;
+        }
+        .hamburger.active span:nth-child(1) {
+            transform: rotate(-45deg) translate(-5px, 6px);
+        }
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+        .hamburger.active span:nth-child(3) {
+            transform: rotate(45deg) translate(-5px, -6px);
+        }
+        .nav-menu {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background: rgba(0,0,0,0.8);
+            padding: 20px;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            flex-direction: column;
+            min-width: 150px;
+        }
+        .nav-menu.active {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
         }
         .nav-menu ul {
             list-style: none;
             padding: 0;
             margin: 0;
             display: flex;
+            flex-direction: column;
         }
         .nav-menu li {
-            margin: 0 15px;
+            margin: 10px 0;
         }
         .nav-menu a {
             color: white;
             text-decoration: none;
             font-weight: bold;
             transition: color 0.3s ease, transform 0.3s ease;
+            padding: 5px 10px;
+            border-radius: 5px;
         }
         .nav-menu a:hover {
             color: #FFD700;
-            transform: scale(1.1);
+            transform: scale(1.05);
         }
         .nav-menu a.active {
             color: #FFD700;
         }
         .nav-menu a:not(.active) {
             color: #ADD8E6;
+        }
+        /* Desktop Styles (original) */
+        @media (min-width: 769px) {
+            .hamburger {
+                display: none;
+            }
+            .nav-container {
+                left: 50%;
+                top: 20px;
+                transform: translateX(-50%);
+            }
+            .nav-menu {
+                position: absolute;
+                top: 0;
+                left: 0;
+                background: rgba(0,0,0,0.5);
+                padding: 10px 20px;
+                border-radius: 25px;
+                transition: all 0.3s ease;
+                opacity: 1;
+                visibility: visible;
+                transform: none;
+                flex-direction: row;
+                min-width: auto;
+            }
+            .nav-menu ul {
+                display: flex;
+                flex-direction: row;
+            }
+            .nav-menu li {
+                margin: 0 15px;
+            }
+            .nav-menu:hover {
+                background: rgba(0,0,0,0.7);
+                transform: translateX(-50%) scale(1.05);
+            }
+        }
+        /* Mobile Styles */
+        @media (max-width: 768px) {
+            .hamburger {
+                display: flex;
+            }
+            .nav-container {
+                left: 15px;
+            }
+            .nav-menu {
+                left: 0;
+                top: 60px; /* Adjust based on hamburger height */
+                background: rgba(0,0,0,0.9);
+                border-radius: 10px;
+                box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+            }
+            .nav-menu ul {
+                flex-direction: column;
+            }
+            .nav-menu li {
+                margin: 10px 0;
+            }
         }
         section {
             padding: 2em 1em;
@@ -270,7 +366,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background-image: 
+            background-image:
                 radial-gradient(2px 2px at 20px 30px, #fff, transparent),
                 radial-gradient(2px 2px at 40px 70px, rgba(255,255,255,0.8), transparent),
                 radial-gradient(1px 1px at 90px 40px, #fff, transparent),
@@ -359,12 +455,6 @@
             .welcome-text {
                 font-size: 1.2em;
             }
-            .nav-menu ul {
-                flex-direction: column;
-            }
-            .nav-menu li {
-                margin: 5px 0;
-            }
             #gallery {
                 grid-template-columns: repeat(2, 1fr);
             }
@@ -395,10 +485,6 @@
             .logo-title {
                 font-size: 1.5em;
             }
-            .nav-menu {
-                top: 10px;
-                padding: 5px 10px;
-            }
             #gallery {
                 grid-template-columns: 1fr;
             }
@@ -406,18 +492,32 @@
                 width: 50px;
                 height: 50px;
             }
+            .nav-container {
+                left: 10px;
+            }
+            .hamburger span {
+                width: 20px;
+                height: 2px;
+            }
         }
     </style>
 </head>
 <body>
     <header>
-        <nav class="nav-menu">
-            <ul>
-                <li><a href="index.html">Sejarah</a></li>
-                <li><a href="makanan.html">Makanan</a></li>
-                <li><a href="spot.html" class="active">Spot</a></li>
-            </ul>
-        </nav>
+        <div class="nav-container">
+            <div class="hamburger" onclick="toggleMenu()">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            <nav class="nav-menu">
+                <ul>
+                    <li><a href="index.html">Sejarah</a></li>
+                    <li><a href="makanan.html">Makanan</a></li>
+                    <li><a href="spot.html" class="active">Spot</a></li>
+                </ul>
+            </nav>
+        </div>
         <h1 class="logo-title">Setu Babakan</h1>
         <img src="./1000_F_544269629_qpJ5dyc7a9q5vMLcj59DGdYzMk7ciIQf-removebg-preview.png" alt="Ondel-Ondel" class="crown-icon">
         <p class="welcome-text">Selamat Datang Di Cagar Budaya Setu Babakan</p>
@@ -425,10 +525,10 @@
     <section id="gallery-section" class="visible">
         <h2>Tempat Bersejarah di Kampung Betawi</h2>
         <p>
-            Jelajahi berbagai tempat bersejarah yang menjadi kebanggaan masyarakat Betawi, seperti Setu Babakan yang menjadi pusat pelestarian 
-            budaya Betawi dengan suasana kampung tradisionalnya, Rumah Si Pitung yang menyimpan kisah legendaris tentang pahlawan rakyat 
-            Betawi, serta Monumen Ondel-Ondel yang menjadi simbol kegembiraan dan identitas masyarakat Betawi. Melalui galeri foto ini, Anda 
-            dapat menikmati keindahan arsitektur, kekayaan budaya, dan jejak sejarah yang melekat pada setiap sudutnya, seolah mengajak Anda 
+            Jelajahi berbagai tempat bersejarah yang menjadi kebanggaan masyarakat Betawi, seperti Setu Babakan yang menjadi pusat pelestarian
+            budaya Betawi dengan suasana kampung tradisionalnya, Rumah Si Pitung yang menyimpan kisah legendaris tentang pahlawan rakyat
+            Betawi, serta Monumen Ondel-Ondel yang menjadi simbol kegembiraan dan identitas masyarakat Betawi. Melalui galeri foto ini, Anda
+            dapat menikmati keindahan arsitektur, kekayaan budaya, dan jejak sejarah yang melekat pada setiap sudutnya, seolah mengajak Anda
             menelusuri perjalanan panjang warisan Betawi dari masa ke masa.
         </p>
         <div id="gallery">
@@ -442,14 +542,28 @@
             <img src="https://ik.imagekit.io/tvlk/blog/2025/01/shutterstock_1944892174.jpg?tr=q-70,c-at_max,w-500,h-300,dpr-2" alt="">
         </div>
     </section>
-
     <!-- Lightbox Modal -->
     <div id="lightbox" class="modal">
         <span class="close">&times;</span>
         <img class="modal-content" id="modal-img">
     </div>
-
     <script>
+        // Hamburger Menu Toggle
+        function toggleMenu() {
+            const hamburger = document.querySelector('.hamburger');
+            const navMenu = document.querySelector('.nav-menu');
+            hamburger.classList.toggle('active');
+            navMenu.classList.toggle('active');
+        }
+
+        // Close menu when clicking on a link (optional, for better UX)
+        document.querySelectorAll('.nav-menu a').forEach(link => {
+            link.addEventListener('click', () => {
+                document.querySelector('.hamburger').classList.remove('active');
+                document.querySelector('.nav-menu').classList.remove('active');
+            });
+        });
+
         // Simple scroll animation trigger (not needed for single section, but kept for consistency)
         function checkScroll() {
             const sections = document.querySelectorAll('section');
@@ -462,23 +576,19 @@
         }
         window.addEventListener('scroll', checkScroll);
         checkScroll(); // Initial check
-
         // Lightbox functionality
         const lightbox = document.getElementById('lightbox');
         const modalImg = document.getElementById('modal-img');
         const closeBtn = document.querySelector('.close');
-
         document.querySelectorAll('#gallery img').forEach(img => {
             img.onclick = function() {
                 lightbox.style.display = 'block';
                 modalImg.src = this.src;
             }
         });
-
         closeBtn.onclick = function() {
             lightbox.style.display = 'none';
         }
-
         lightbox.onclick = function(event) {
             if (event.target === lightbox) {
                 lightbox.style.display = 'none';
